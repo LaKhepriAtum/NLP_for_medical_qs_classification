@@ -31,14 +31,12 @@ class Exam(QWidget, form_window):
         try:
             with open('./output/encoder_change_female_dentist.pickle', 'rb') as f:
                 encoder = pickle.load(f)
-            print(encoder.classes_)
             label = encoder.classes_
             # print(labeled_Y[:5])
             okt = Okt()  # 형태소 기준으로 나눠주는 함수, 종류가 5개 -> 결국 다 사용해서 5번 돌린다. open korea token
 
 
             X = okt.morphs(input_text, stem=True)  # stem=True-> 원형으로 만들어주기(ex.접었다->접다)
-            print(X)
 
             stopwords = pd.read_csv('./crawling_data/stopwords.csv',
                                     index_col=0)  # 아주 기본적인 불용어 리스트 불러오기, 데이터의 종류에 따라 불용어는 달라진다.
@@ -49,27 +47,22 @@ class Exam(QWidget, form_window):
                     if X[i] not in list(stopwords['stopword']):  # 불용어에 속하면 제외
                         words.append(X[i])
             X = ' '.join(words)
-            print(X)
               # X 안의 모든 형태소를 찾아서 unique한 값(숫자)을 부여 dict 형태, token 안에 변환된 dict 정보가 저장되어 있다.
 
             with open('./output/medical_token_change_female_dentist.pickle', 'rb') as f:
                 token = pickle.load(f)
             tokened_X = token.texts_to_sequences([X])  # dict 형태를 번호로 바꿔서 순서대로 list 화
-            print(tokened_X)
             X_pad = pad_sequences(tokened_X, 816)
-            print(X_pad)
             predict_value = self.model.predict(X_pad)
             predict_value = np.concatenate(predict_value).tolist()
             predict_value_sort = sorted(predict_value,reverse=True)
-            print(predict_value_sort)
             if predict_value_sort[0] > 0.9:
                 predict_label = label[np.argmax(predict_value)]
-                self.lbl_result.setText(f'해당 증상은 {predict_label} 에서 진료받으시면 됩니다.\n내 주변 {predict_label}를 안내해드릴게요.')
+                self.lbl_result.setText(f'해당 증상은 {predict_label} 에서 \n 진료받으시면 됩니다.\n내 주변 {predict_label}를 안내해드릴게요.')
             elif predict_value_sort[0] > 0.4:
                 predict_first = label[np.argmax(predict_value)]
-                del predict_value_sort[0]
-                print(predict_value_sort)
-                predict_second = label[np.argmax(predict_value_sort)]
+                second = predict_value_sort[1]
+                predict_second = label[predict_value.index(second)]
                 self.lbl_result.setText(f'해당 증상은 {predict_first} 혹은 {predict_second} \n에서 진료받으시면 됩니다.\n더 정확한 분석을 위해서는 \n좀더 자세히 증상을 설명해주세요.')
             else:
                 self.lbl_result.setText('증상을 좀 더 자세히 말씀해주세요.\n 분석을 위해선 더 많은 설명이 필요해요.')
