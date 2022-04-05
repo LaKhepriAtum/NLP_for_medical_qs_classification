@@ -27,7 +27,7 @@ class Exam(QWidget, form_window):
 
     def predict_department(self):
         input_text = self.input_text.toPlainText()
-        self.input_label.setText(input_text)
+        self.input_text.setText('')
         try:
             with open('./output/encoder_change_female_dentist.pickle', 'rb') as f:
                 encoder = pickle.load(f)
@@ -59,10 +59,21 @@ class Exam(QWidget, form_window):
             X_pad = pad_sequences(tokened_X, 816)
             print(X_pad)
             predict_value = self.model.predict(X_pad)
+            predict_value = np.concatenate(predict_value).tolist()
+            predict_value.sort(reverse=True)
+            print(predict_value)
+            if predict_value[0] > 0.9:
+                predict_label = label[np.argmax(predict_value)]
+                self.lbl_result.setText(f'해당 증상은 {predict_label} 에서 진료받으시면 됩니다.\n내 주변 {predict_label}를 안내해드릴게요.')
+            elif predict_value[0] > 0.4:
+                predict_first = label[np.argmax(predict_value)]
+                del predict_value[0]
+                print(predict_value)
+                predict_second = label[np.argmax(predict_value)]
+                self.lbl_result.setText(f'해당 증상은 {predict_first} 혹은 {predict_second} 에서 진료받으시면 됩니다.\n더 정확한 분석을 위해서는 좀더 자세히 증상을 설명해주세요.')
+            else:
+                self.lbl_result.setText('증상을 좀 더 자세히 말씀해주세요.분석을 위해선 더 많은 설명이 필요해요.')
 
-            predict_label = label[np.argmax(predict_value)]
-            self.output_label.setText(predict_label)
-            print(predict_label)
         except:
             print('error')
         # self.input_label.setText(predict_value)
