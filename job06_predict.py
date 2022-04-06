@@ -13,15 +13,15 @@ from konlpy.tag import Okt
 
 
 pd.set_option('display.unicode.east_asian_width', True)
-df = pd.read_csv('./crawling_data/naver_headline_news20220331.csv')
+df = pd.read_csv('./crawling_data/medical_qs_Random.csv')
 print(df.head())
 
 
 X= df.title
-Y= df.category
+Y= df.department
 
 # encoder = LabelEncoder()   이렇게 만들지말고 저장했던 거 불러와야지
-with open('./output/encoder_change_female_dentist.pickle', 'rb') as f:
+with open('./output/encoder_numbering.pickle', 'rb') as f:
     encoder = pickle.load(f)
 
 labeled_Y= encoder.transform(Y)
@@ -59,16 +59,16 @@ print(X[1])
 
 # 학습 안 한 단어가 오면 0이 옴.
 
-with open('./output/news_token.pickle', 'rb') as f:
+with open('./output/medical_token_numbering.pickle', 'rb') as f:
     token = pickle.load(f)
 tokened_X = token.texts_to_sequences(X)
 
 for i in range(len(tokened_X)):
-    if len(tokened_X[i]) > 29: #맥스값
-        tokened_X[i] = tokened_X[i][:29]
-X_pad = pad_sequences(tokened_X, 29)
+    if len(tokened_X[i]) > 816: #맥스값
+        tokened_X[i] = tokened_X[i][:816]
+X_pad = pad_sequences(tokened_X, 816)
 label = encoder.classes_
-model = load_model('./output/news_category_classification_model_0.7568148970603943.h5')
+model = load_model('./output/medical_qs_classification_model_0.6597162485122681_numbering.h5')
 preds = model.predict(X_pad)
 predicts =[]
 for pred in preds:
@@ -77,12 +77,12 @@ for pred in preds:
 df['predict'] = predicts
 df['OX'] = 0
 for i in range(len(df)):
-    if df.loc[i, 'category'] == df.loc[i, 'predict']:
+    if df.loc[i, 'department'] == df.loc[i, 'predict']:
         df.loc[i,'OX'] = 'O'
     else:
         df.loc[i,'OX'] = 'X'
 print(df['OX'].value_counts()/len(df))
 
 for i in range(len(df)):
-    if df['category'][i] != df['predict'][i]:
+    if df['department'][i] != df['predict'][i]:
         print(df.iloc[i])
