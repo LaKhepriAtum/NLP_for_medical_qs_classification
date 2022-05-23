@@ -29,6 +29,7 @@ class Exam(QWidget, form_window):
     def predict_department(self):
         input_text = self.input_text.toPlainText()
         self.input_text.setText('')
+        print('debug01')
         try:
             with open('./output/encoder_numbering.pickle', 'rb') as f:
                 encoder = pickle.load(f)
@@ -41,7 +42,7 @@ class Exam(QWidget, form_window):
             X = okt.morphs(input_text, stem=True)  # stem=True-> 원형으로 만들어주기(ex.접었다->접다)
             print(X)
 
-            stopwords = pd.read_csv('./stopwords/stopwords.csv',
+            stopwords = pd.read_csv('./output/stopwords.csv',
                                     index_col=0)  # 아주 기본적인 불용어 리스트 불러오기, 데이터의 종류에 따라 불용어는 달라진다.
 
             words = []
