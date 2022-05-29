@@ -35,10 +35,10 @@ class Exam(QWidget, form_window):
                 encoder = pickle.load(f)
             print(encoder.classes_)
             label = encoder.classes_
-            # print(labeled_Y[:5])
+            print(label)
             okt = Okt()  # 형태소 기준으로 나눠주는 함수, 종류가 5개 -> 결국 다 사용해서 5번 돌린다. open korea token
 
-
+            print(input_text)
             X = okt.morphs(input_text, stem=True)  # stem=True-> 원형으로 만들어주기(ex.접었다->접다)
             print(X)
 
@@ -63,7 +63,7 @@ class Exam(QWidget, form_window):
             predict_value = self.model.predict(X_pad)
             predict_value = np.concatenate(predict_value).tolist()
             predict_value_sort = sorted(predict_value,reverse=True)
-            print(predict_value_sort)
+            print(predict_value_sort[0])
             if predict_value_sort[0] > 0.9:
                 predict_label = label[np.argmax(predict_value)]
                 self.lbl_result.setText(f'해당 증상은 {predict_label}에서 \n 진료받으시면 됩니다.\n내 주변 {predict_label}를 안내해드릴게요.')
