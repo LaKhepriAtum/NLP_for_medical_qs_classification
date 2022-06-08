@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>526</width>
+    <height>403</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <pointsize>12</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:rgb(247, 251, 255);
+selection-color: rgb(247, 255, 148);
+
+border-color: rgb(93, 163, 255);
+border-width: thick</string>
+  </property>
+  <widget class="QTextEdit" name="input_text">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>270</y>
+     <width>481</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 2px solid rgb(210, 222, 252);
+border-radius: 15%;
+</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_input">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>230</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>9</pointsize>
+     <weight>9</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(246, 237, 255);
+font: 75 9pt &quot;맑은 고딕&quot;;
+font: 75 9pt &quot;Arial&quot;;
+font: 75 9pt &quot;Arial&quot;;
+border-radius: 10%;
+border-color: rgb(83, 109, 255);
+border: 2px solid rgb(210, 206, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>상담 받기</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_result">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>461</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:  rgb(240, 240, 253);
+center ;
+border-radius: 50%;</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; color:#1a0042;&quot;&gt;안녕하세요!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; color:#1a0042;&quot;&gt;어디가 아프신가요? 증상을 말씀해주세요.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; color:#1a0042;&quot;&gt;증상에 따라 가장 적절한 병원을 안내해드릴게요.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_reset">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>230</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(246, 237, 255);
+font: 75 9pt &quot;맑은 고딕&quot;;
+font: 75 9pt &quot;Arial&quot;;
+font: 75 9pt &quot;Arial&quot;;
+border-radius: 10%;
+border-color: rgb(83, 109, 255);
+border: 2px solid rgb(210, 206, 255);
+</string>
+   </property>
+   <property name="text">
+    <string>리셋</string>
+   </property>
+  </widget>
+  <zorder>lbl_result</zorder>
+  <zorder>input_text</zorder>
+  <zorder>btn_input</zorder>
+  <zorder>btn_reset</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
