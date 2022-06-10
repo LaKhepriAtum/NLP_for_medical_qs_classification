@@ -6,7 +6,7 @@ import time
 
 def crawl_data():
     try:
-        department = driver.find_element_by_xpath(f'//*[@id="au_board_list"]/tr[{i}]/td[2]/a').text # 과 찾아서 text 저장
+        department = driver.find_element_by_xpath(f'//*[@id="au_board_list"]/tr[{i}]/td[2]/a').text #과 찾아서 text 저장
         department = re.compile('[^가-힣a-zA-Z ]').sub(' ', department) # 필요한 것만 가지기
         time.sleep(0.01)
         driver.find_element_by_xpath(f'//*[@id="au_board_list"]/tr[{i}]/td[1]/a').click() # 해당하는 글 클릭
