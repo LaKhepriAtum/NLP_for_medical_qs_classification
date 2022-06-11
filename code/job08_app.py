@@ -66,13 +66,13 @@ class Exam(QWidget, form_window):
             print(predict_value_sort[0])
             if predict_value_sort[0] > 0.9:
                 predict_label = label[np.argmax(predict_value)]
-                self.lbl_result.setText(f'해당 증상은 {predict_label}에서 \n 진료받으시면 됩니다.\n내 주변 {predict_label}를 안내해드릴게요.')
+                self.lbl_result.setText(f'해당 증상은 {predict_label}에서 \n 진료받으시면 됩니다.\n주변 {predict_label}를 방문해주시면 됩니다.')
             elif predict_value_sort[0] > 0.4:
                 predict_first = label[np.argmax(predict_value)]
                 second = predict_value_sort[1]
                 predict_second = label[predict_value.index(second)]
                 self.lbl_result.setText(
-                    f'해당 증상은 {predict_first} 혹은 {predict_second} \n에서 진료받으시면 됩니다.\n더 정확한 분석을 위해서는 \n좀더 자세히 증상을 설명해주세요.')
+                    f'해당 증상은 {predict_first} 혹은 {predict_second} \n를 방문해주시면 됩니다.\n더 정확한 분석을 위해서는 \n좀더 자세히 증상을 설명해주세요.')
             else:
                 self.lbl_result.setText('증상을 좀 더 자세히 말씀해주세요.\n 분석을 위해선 더 많은 설명이 필요해요.')
 
