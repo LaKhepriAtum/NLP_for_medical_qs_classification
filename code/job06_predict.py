@@ -13,23 +13,24 @@ from konlpy.tag import Okt
 
 
 pd.set_option('display.unicode.east_asian_width', True)
-df = pd.read_csv('../crawling_data/medical_qs_Random.csv')
-print(df.head())
+df = pd.read_csv('../datasets/medical_qs_numbering.csv')
+df.columns = ["title", "department"]
+df.info()
 
 
-X= df.title
-Y= df.department
+
 
 # encoder = LabelEncoder()   이렇게 만들지말고 저장했던 거 불러와야지
 with open('../output/encoder_numbering.pickle', 'rb') as f:
     encoder = pickle.load(f)
-
+df = df[df['department'].isin(encoder.classes_)]
+df = df.dropna()
+df.columns = ["title", "department"]
+X= df.title
+Y= df.department
+df.info()
 labeled_Y= encoder.transform(Y)
-'''fit_transform은 y를 주면 y의 유니크한 값을 찾음 그럼 카테고리 6개지?  근데 그거 정했잖아.
-그거 정한 걸로 그대로 오늘꺼 써야하잖아. 이미 정해진 걸로 라벨링만 작업할거면 transform해야함.'''
-'''#라벨을 주고 그 라벨이 뭐냐 물어볼때는 리버스트랜스폼'''
 
-print(encoder.classes_)
 print(labeled_Y[:5])
 
 
@@ -40,10 +41,8 @@ onehot_Y = to_categorical(labeled_Y)
 # print(onehot_Y)
 
 okt = Okt()
-# x = []
 for i in range(len(X)):
-   X[i] = okt.morphs(X[i], stem=True)
-
+    X[i] = okt.morphs(X[i], stem=True)
 stopwords= pd.read_csv('../datasets/stopwords.csv', index_col=0)
 
 for j in range(len(X)):

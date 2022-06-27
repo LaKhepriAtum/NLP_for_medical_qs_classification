@@ -31,7 +31,7 @@ model.summary()
 
 fit_hist= model.fit(X_train, Y_train, batch_size=100, epochs= 30, verbose=1, validation_data = (X_test, Y_test))
 
-model.save('../output/medical_category_classification_model_{}.h5'.format(fit_hist.history['val_accuracy'][-1]))
+model.save('../output/medical_qs_classification_model_{}.h5'.format(fit_hist.history['val_accuracy'][-1]))
 
 plt.plot(fit_hist.history['accuracy'], label = 'accuracy')
 plt.plot(fit_hist.history['val_accuracy'], label = 'val_accuracy')

@@ -42,9 +42,10 @@ df_data = pd.DataFrame()
 title_list = [] # 우리가 쓸 요소 리스트 만들기
 content_list = []
 department_list = []
-for k in range(1, 10): # 페이지 range 1 page ~ 500 page
+for k in range(1, 100): # 페이지 range 1 page ~ 500 page
     # url = f'https://kin.naver.com/qna/expertAnswerList.naver?dirId=701{l}&queryTime=2022-04-01%2011%3A39%3A23&page={k}' # l =과 , k = page, 큰 과 사용시
-    url = f'https://kin.naver.com/qna/expertAnswerList.naver?dirId=701&queryTime=2022-04-05%2018%3A52%3A37&page={k}' # l =과 , k = page ,세부 과 사용시
+    # url = f'https://kin.naver.com/qna/expertAnswerList.naver?dirId=701&queryTime=2022-04-05%2018%3A52%3A37&page={k}' # l =과 , k = page ,세부 과 사용시
+    url = f'https://kin.naver.com/qna/expertAnswerList.naver?dirId=701&queryTime=2022-06-26%2023%3A32%3A04&page={k}'
     driver.get(url) #url앞의 url 받기
     time.sleep(0.01)
     for i in range(1, 21): # page 안의 글, 총 20개
@@ -62,7 +63,7 @@ for k in range(1, 10): # 페이지 range 1 page ~ 500 page
         df_section_department = pd.DataFrame(department_list, columns=['department'])  # 리스트를 dataFrame화
         df_data = pd.concat([df_data, df_section_title, df_section_content, df_section_department],
                             axis='columns', ignore_index=True)  # 만든 dataFrame 합치기, axis='columns'->옆으로 합치기
-        df_data.to_csv('./crawling_data/medical_qs_Random.csv'.format(k), index=False)  # index=False-> 만든 csv에 index 제거
+        df_data.to_csv('../datasets/medical_qs_Random.csv'.format(k), index=False, columns=['title', 'content', 'department'])  # index=False-> 만든 csv에 index 제거
         title_list = []  # 우리가 쓸 요소 리스트 만들기
         content_list = []
         department_list = []
